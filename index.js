@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 if (taskTest.style.textDecoration === 'line-through') {
                     taskTest.style.textDecoration = 'none';
                     taskTest.style.color = '#000';
+                    radioButton.checked = false
                 } else {
                     taskTest.style.textDecoration = 'line-through';
                     taskTest.style.color = '#aaa';
