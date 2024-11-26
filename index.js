@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let InputValue = document.getElementById('input')
     let list = document.getElementById('list')
     let addBtn = document.getElementById('btn')
+    let SearchInput = document.querySelector('.search-input')
 
     let editList = null
 
@@ -67,7 +68,11 @@ document.addEventListener('DOMContentLoaded',()=>{
                editList=li
             })
 
-           li.append(radioButton,taskTest,DltButton,editButton)
+            let dotsButtons = document.createElement('button')
+            dotsButtons.className = 'dots-Btn'
+            dotsButtons.innerHTML = '⋮'
+
+           li.append(radioButton,taskTest,DltButton,editButton,dotsButtons)
            list.append(li)
         }
         InputValue.value = ''
@@ -75,4 +80,18 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
     // Search items
+    SearchInput.addEventListener('input',function(){
+        let query = SearchInput.value.toLowerCase()
+        let items = document.querySelectorAll('.task-item')
+
+        items.forEach(item =>{
+            let taskText = item.querySelector('.task-test').textContent.toLowerCase()
+            if(taskText.includes(query)){
+                item.style.display = ''
+            }
+            else{
+                item.style.display = 'none'
+            }
+        })
+    })
 })
