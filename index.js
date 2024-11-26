@@ -36,15 +36,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
             radioButton.addEventListener('click',function(){
-              let allTask = document.querySelectorAll('.task-test')
-              allTask.forEach(ele => {
-                ele.style.textDecoration = 'none'
-                ele.style.color = '#000'
-              })
-              if(radioButton.checked){
-                taskTest.style.textDecoration = 'line-through'
-                taskTest.style.color = '#aaa'
-              }
+                if (taskTest.style.textDecoration === 'line-through') {
+                    taskTest.style.textDecoration = 'none';
+                    taskTest.style.color = '#000';
+                } else {
+                    taskTest.style.textDecoration = 'line-through';
+                    taskTest.style.color = '#aaa';
+                }
             })
 
 
@@ -52,6 +50,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             let DltButton = document.createElement("button")
             DltButton.innerText='Delete'
             DltButton.className='deleteBtn'
+            DltButton.style.display = 'none'
 
             DltButton.addEventListener('click',function(event){
                list.removeChild(event.target.closest('li'))
@@ -59,20 +58,56 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             //create edit button
             let editButton = document.createElement('button')
-            editButton.className='editButton'
+            // editButton.className='editButton'
             editButton.textContent='Edit'
+            editButton.style.display = 'none'
 
             editButton.addEventListener('click', function(event){
-               InputValue.value = taskTest.textContent
-               addBtn.innerText = 'Update'
-               editList=li
+            //    InputValue.value = taskTest.textContent
+            //    addBtn.innerText = 'Update'
+            //    editList=li
+                 if(editButton.textContent === 'Edit'){
+                    let inpitbox = document.createElement('input')
+                         inpitbox.type = 'text'
+                         inpitbox.value = taskTest.textContent
+                         inpitbox.className='editvalue'
+
+                         li.replaceChild(inpitbox,taskTest)
+
+                         editButton.textContent = 'save'
+                 }
+                 else if(editButton.textContent === 'save'){
+                    let inputBox = li.querySelector('.editvalue')
+                    let newValue = inputBox.value
+                      
+                    if(newValue === ''){
+                        alert('task can not be empty')
+                        return;
+                    }
+
+                    taskTest.textContent = newValue
+
+                    li.replaceChild(taskTest,inputBox)
+
+                    editButton.textContent = 'Edit'
+                 }
             })
 
-            let dotsButtons = document.createElement('button')
-            dotsButtons.className = 'dots-Btn'
-            dotsButtons.innerHTML = '⋮'
+            let dotsButton = document.createElement('button');
+            dotsButton.className = 'dots-Btn';
+            dotsButton.innerHTML = '⋮';
 
-           li.append(radioButton,taskTest,DltButton,editButton,dotsButtons)
+            dotsButton.addEventListener('click', function () {
+                if (DltButton.style.display === 'none' && editButton.style.display === 'none') {
+                    DltButton.style.display = 'block';
+                    editButton.style.display = 'block';
+                } else {
+                    DltButton.style.display = 'none';
+                    editButton.style.display = 'none';
+                }
+            });
+
+           li.append(radioButton,taskTest,DltButton,editButton,dotsButton)
            list.append(li)
         }
         InputValue.value = ''
