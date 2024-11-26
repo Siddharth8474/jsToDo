@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             //create edit button
             let editButton = document.createElement('button')
-            // editButton.className='editButton'
-            editButton.textContent='Edit'
+             editButton.className='editButton'
+            editButton.innerText='Edit'
             editButton.style.display = 'none'
 
             editButton.addEventListener('click', function(event){
